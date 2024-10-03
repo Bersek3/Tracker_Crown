@@ -16,7 +16,9 @@ app.get('/track/:trackingNumber', async (req, res) => {
     try {
         // Reemplaza 'YOUR_API_KEY' con tu clave de API de 17track
         const apiKey = '7FEB86258AED35FC8AF5D6BC3054CA0F';
-        const response = await fetch(`https://api.17track.net/track/v2/gettrackinfo?num=${trackingNumber}&apiKey=${apiKey}`);
+        const url = `https://api.17track.net/v2/gettrackinfo?num=${trackingNumber}&apiKey=${apiKey}`;
+
+        const response = await fetch(url);
 
         if (!response.ok) {
             return res.status(response.status).json({ error: 'Error fetching tracking information' });
