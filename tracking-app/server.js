@@ -1,41 +1,38 @@
-const express = require("express");
-const axios = require("axios");
-const path = require("path"); // Importa path para resolver rutas
+const express = require('express');
+const axios = require('axios');
+const bodyParser = require('body-parser');
+const path = require('path');
+
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
-app.use(express.static(path.join(__dirname))); // Sirve archivos estáticos desde el directorio actual
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Ruta para obtener información de seguimiento
-app.post("/getTrackInfo", async (req, res) => {
-    const trackingNumbers = req.body; // Obtiene los números de seguimiento del cuerpo de la solicitud
-
-    const options = {
-        method: 'POST',
-        url: 'https://api.17track.net/track/v2.2/gettrackinfo',
-        headers: {
-            'content-type': 'application/json',
-            '17token': '7FEB86258AED35FC8AF5D6BC3054CA0F' // Reemplaza esto con tu clave secreta
-        },
-        data: JSON.stringify(trackingNumbers) // Convierte el array de objetos a una cadena JSON
-    };
+// Endpoint para obtener detalles de seguimiento
+app.post('/track', async (req, res) => {
+    const { trackingNumber } = req.body;
 
     try {
-        const response = await axios.request(options);
-        res.json(response.data); // Envía la respuesta de la API al cliente
+        const response = await axios.post('https://api.17track.net/track/v2/gettrackinfo', {
+            data: [{ number: trackingNumber }]
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                '17token': '7FEB86258AED35FC8AF5D6BC3054CA0F'
+            }
+        });
+
+        res.json(response.data);
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Error en la solicitud a la API");
+        res.status(500).json({ error: error.message });
     }
 });
 
-// Ruta para servir el index.html
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html")); // Sirve el archivo index.html
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Iniciar el servidor
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });

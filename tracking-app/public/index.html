@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguimiento de Envíos</title>
+</head>
+<body>
+    <h1>Seguimiento de Envíos</h1>
+    <form id="trackingForm">
+        <label for="trackingNumber">Número de Seguimiento:</label>
+        <input type="text" id="trackingNumber" name="trackingNumber" required>
+        <button type="submit">Verificar</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('trackingForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const trackingNumber = document.getElementById('trackingNumber').value;
+
+            try {
+                const response = await fetch('/track', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ trackingNumber })
+                });
+
+                const data = await response.json();
+                document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('result').innerText = 'Error: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>
