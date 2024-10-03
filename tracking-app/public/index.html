@@ -32,11 +32,11 @@
                 alert('Please enter a tracking number.');
                 return;
             }
-
+    
             try {
-                const response = await fetch(`https://your-railway-app-url/track/${trackingNumber}`);
+                const response = await fetch(`https://tracker-production.up.railway.app/track/${trackingNumber}`);
                 const data = await response.json();
-
+    
                 if (response.ok) {
                     document.getElementById('trackingInfo').innerText = JSON.stringify(data, null, 2);
                 } else {
