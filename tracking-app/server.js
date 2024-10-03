@@ -1,35 +1,35 @@
 const express = require('express');
 const cors = require('cors');
-const axios = require('axios');
+const fetch = require('node-fetch');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
-// Habilitar CORS
 app.use(cors());
-app.use(express.json());
 
-// API Key de Track123
-const TRACK123_API_KEY = '2b383457e2a848aeb54e660b77933f32';
-
-// Ruta para obtener la información de seguimiento
+// Endpoint para hacer seguimiento
 app.get('/track/:trackingNumber', async (req, res) => {
     const trackingNumber = req.params.trackingNumber;
 
     try {
-        const response = await axios.get(`https://api.track123.com/v1/track`, {
-            params: {
-                tracking_number: trackingNumber,
-                api_key: TRACK123_API_KEY
+        const response = await fetch(`https://api.track123.com/v1/track?tracking_number=${trackingNumber}`, {
+            headers: {
+                'Authorization': 'Bearer 2b383457e2a848aeb54e660b77933f32', // Usa tu API Key aquí
             }
         });
 
-        res.json(response.data);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        res.json(data);
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching tracking information', error: error.message });
+        console.error('Error fetching tracking information:', error);
+        res.status(500).send('Error fetching tracking information');
     }
 });
 
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}/`);
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}/`);
 });
