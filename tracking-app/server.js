@@ -1,11 +1,12 @@
+// server.js
 const express = require('express');
 const cors = require('cors');
-const fetch = require('node-fetch'); // Asegúrate de usar la versión correcta de node-fetch
+const fetch = require('node-fetch');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-app.use(cors()); // Habilitar CORS para todas las solicitudes
+app.use(cors()); // Habilitar CORS
 app.use(express.json());
 
 // Ruta para manejar la solicitud de seguimiento
@@ -13,9 +14,10 @@ app.get('/track/:trackingNumber', async (req, res) => {
     const trackingNumber = req.params.trackingNumber;
 
     try {
-        // Hacer la solicitud a la API de Track123
-        const response = await fetch(`https://api.track123.com/v1/track?tracking_number=${trackingNumber}&api_key=2b383457e2a848aeb54e660b77933f32`);
-        
+        // Reemplaza 'YOUR_API_KEY' con tu clave de API de 17track
+        const apiKey = '7FEB86258AED35FC8AF5D6BC3054CA0F';
+        const response = await fetch(`https://api.17track.net/track/v2/gettrackinfo?num=${trackingNumber}&apiKey=${apiKey}`);
+
         if (!response.ok) {
             return res.status(response.status).json({ error: 'Error fetching tracking information' });
         }
