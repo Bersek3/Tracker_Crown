@@ -1,0 +1,200 @@
+#track123-tracking-widget {
+    width: 100%;
+}
+#track123-tracking-widget iframe {
+    width: 100%;
+    height: 0;
+    border: none;
+    border-radius: 12px;
+}
+.track123-widget-wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.track123-widget-search-container {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+}
+.track123-widget-search-tab {
+    display: flex;
+    margin-bottom: 32px;
+}
+.track123-widget-search-tab .track123-tab-item {
+    color: #435366;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 4px 16px;
+    cursor: pointer;
+    border-radius: 16px;
+}
+.track123-tab-item:hover {
+    background: #F0F4F8;
+}
+.track123-active-tab {
+    color: #FFFFFF !important;
+    background: #5B62FF;
+}
+.track123-active-tab:hover {
+    background: #435366 !important;
+}
+.track123-widget-search-tab .track123-tab-item:first-of-type {
+    margin-right: 4px;
+}
+.track123-widget-search-input-content {
+    width: 100%;
+    position: relative;
+}
+.track123-widget-search-input-content svg {
+    position: absolute;
+    top: 8px;
+    left: 12px;
+    z-index: 2;
+}
+#track123-widget-search-num-input {
+    width: 100%;
+    color: #202020;
+    font-size: 16px;
+    line-height: 24px;
+    background: #FFFFFF;
+    border: 1px solid #5B62FF;
+    backdrop-filter: blur(5px);
+    padding: 8px 16px 8px 44px;
+    border-radius: 30px;
+    box-sizing: border-box;
+    box-shadow: 0px 10px 30px rgba(142, 156, 207, 0.07), 0px 4px 8px rgba(142, 156, 207, 0.0417), 0px 2px 4px rgba(142, 156, 207, 0.0283);
+}
+#track123-widget-cargo-warning {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 14px;
+    line-height: 22px;
+    color: #E52E2E;
+    margin-top: 8px;
+}
+.track123-widget-warning {
+    font-size: 12px;
+    line-height: 20px;
+    color: red;
+    display: none;
+}
+.track123-widget-search-btn {
+    color: #FFFFFF;
+    width: 100%;
+    height: 44px;
+    background: #5B62FF;
+    border-radius: 22px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 16px;
+    cursor: pointer;
+}
+.track123-widget-search-btn:hover {
+    background: #435366;
+}
+.track123-widget-search-btn svg {
+    margin-left: 4px;
+}
+.track123-widget-cargo-search-container {
+    width: 100%;
+    padding: 0px 16px;
+    background: #FFFFFF;
+    border: 1px solid #5B62FF;
+    backdrop-filter: blur(5px);
+    box-sizing: border-box;
+    border-radius: 16px;
+    box-shadow: 0px 10px 30px rgba(142, 156, 207, 0.07), 0px 4px 8px rgba(142, 156, 207, 0.0417), 0px 2px 4px rgba(142, 156, 207, 0.0283);
+}
+.track123-widget-cargo-search-input-content {
+    width: 100%;
+    padding: 12px 0px;
+    border-bottom: 1px solid #E6E9EE;
+}
+.track123-widget-cargo-search-input-content .title {
+    font-size: 12px;
+    line-height: 20px;
+    color: #435366;
+}
+.track123-widget-cargo-search-input-content .required {
+    color: red;
+}
+#track123-widget-search-containerNo-input, #track123-widget-search-trackingNo-input, #track123-widget-search-carrierCode-input {
+    width: 100%;
+    color: #202020;
+    font-size: 16px;
+    line-height: 24px;
+    margin-top: 4px;
+    border: none;
+}
+#track123-widget-search-num-input::-webkit-input-placeholder, 
+#track123-widget-search-containerNo-input::-webkit-input-placeholder,
+#track123-widget-search-trackingNo-input::-webkit-input-placeholder,
+#track123-widget-search-carrierCode-input::-webkit-input-placeholder
+{
+	color: #A5ABB2;
+    font-weight: 400;
+}
+#track123-widget-search-containerNo-input:focus-visible, 
+#track123-widget-search-trackingNo-input:focus-visible, 
+#track123-widget-search-carrierCode-input:focus-visible {
+    outline: none !important;
+}
+.track123-widget-cargo-search-input-content select {
+    width: 100%;
+    color: #202020;
+    font-size: 16px;
+    line-height: 24px;
+    margin: 4px -4px;
+    border: none;
+}
+.track123-widget-cargo-search-input-content select:focus-visible {
+    outline: none;
+}
+/* 宽屏 */
+@media screen and (min-width: 1024px) {
+    .widget-container {
+        margin: 40px;
+    }
+    .track123-widget-wrapper {
+        padding: 64px 24px 24px;
+    }
+}
+/* 中屏 */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .widget-container {
+        margin: 24px;
+    }
+    .track123-widget-wrapper {
+        padding: 40px 16px 16px;
+    }
+}
+/* 小屏 */
+@media screen and (max-width: 767px) {
+    .widget-container {
+        margin: 24px;
+    }
+    .track123-widget-wrapper {
+        padding: 40px 16px 16px;
+    }
+    .track123-widget-search-container, .track123-widget-search-input-content, #track123-widget-search-num-input {
+        width: 100% !important;
+    }
+    .track123-widget-cargo-search-container {
+        width: 100% !important;
+    }
+}
+
+@media screen and (min-width: 1023px) {
+    .result .result-container .result-detail .track-list .step-list:first-child .step-dot-item[data-v-03651acb] {
+        background: #000000;
+        border: 1px solid #000000;
+    }
+}
