@@ -2,12 +2,18 @@
 const express = require('express');
 const cors = require('cors');
 const fetch = require('node-fetch');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(cors()); // Habilitar CORS
 app.use(express.json());
+
+// Servir el archivo index.html
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 // Ruta para manejar la solicitud de seguimiento
 app.get('/track/:trackingNumber', async (req, res) => {

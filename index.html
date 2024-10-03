@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        input[type="text"] {
+            width: 200px;
+            padding: 10px;
+            margin-right: 10px;
+        }
+        input[type="button"] {
+            padding: 10px;
+        }
+        #resultContainer {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div>Enter your tracking number here to see your order status.</div>
+    <br />
+    <div>
+        <input type="text" id="trackingNumber" maxlength="50" />
+        <input type="button" value="TRACK" onclick="doTrack()" />
+    </div>
+    <div id="resultContainer"></div>
+
+    <script>
+        async function doTrack() {
+            const trackingNumber = document.getElementById("trackingNumber").value;
+            if (trackingNumber === "") {
+                alert("Please enter a tracking number.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://racker-production.up.railway.app/track/${trackingNumber}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Aquí puedes mostrar los datos de seguimiento en `resultContainer`
+                    document.getElementById("resultContainer").innerHTML = JSON.stringify(data);
+                } else {
+                    throw new Error(data.error || 'Error fetching tracking information');
+                }
+            } catch (error) {
+                console.error('Error fetching tracking information:', error);
+                document.getElementById("resultContainer").innerText = 'Error fetching tracking information';
+            }
+        }
+    </script>
+</body>
+</html>
