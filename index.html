@@ -3,58 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tracking</title>
+    <title>Seguimiento de Envíos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
+            margin: 20px;
         }
-        input[type="text"] {
-            width: 200px;
+        input {
             padding: 10px;
-            margin-right: 10px;
+            margin: 5px;
+            width: 300px;
         }
-        input[type="button"] {
+        button {
             padding: 10px;
+            margin: 5px;
         }
-        #resultContainer {
+        #results {
             margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: auto;
         }
     </style>
 </head>
 <body>
-    <div>Enter your tracking number here to see your order status.</div>
-    <br />
-    <div>
-        <input type="text" id="trackingNumber" maxlength="50" />
-        <input type="button" value="TRACK" onclick="doTrack()" />
-    </div>
-    <div id="resultContainer"></div>
+
+    <h1>Seguimiento de Envíos</h1>
+    <form id="trackingForm">
+        <input type="text" id="trackingNumber" placeholder="Ingresa el número de seguimiento" required>
+        <button type="submit">Consultar</button>
+    </form>
+
+    <div id="results"></div>
 
     <script>
-        async function doTrack() {
-            const trackingNumber = document.getElementById("trackingNumber").value;
-            if (trackingNumber === "") {
-                alert("Please enter a tracking number.");
-                return;
-            }
+        const form = document.getElementById('trackingForm');
+        const resultsDiv = document.getElementById('results');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Previene el envío normal del formulario
+            const trackingNumber = document.getElementById('trackingNumber').value;
 
             try {
-                const response = await fetch(`https://racker-production.up.railway.app/track/${trackingNumber}`);
-                const data = await response.json();
+                const response = await fetch('/getTrackInfo', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify([{ tracking_number: trackingNumber }]), // Envía el número de seguimiento en formato JSON
+                });
 
-                if (response.ok) {
-                    // Aquí puedes mostrar los datos de seguimiento en `resultContainer`
-                    document.getElementById("resultContainer").innerHTML = JSON.stringify(data);
-                } else {
-                    throw new Error(data.error || 'Error fetching tracking information');
+                if (!response.ok) {
+                    throw new Error('Error en la solicitud');
                 }
+
+                const data = await response.json();
+                displayResults(data);
             } catch (error) {
-                console.error('Error fetching tracking information:', error);
-                document.getElementById("resultContainer").innerText = 'Error fetching tracking information';
+                console.error(error);
+                resultsDiv.innerHTML = 'Error al obtener los datos.';
             }
+        });
+
+        function displayResults(data) {
+            resultsDiv.innerHTML = ''; // Limpiar resultados anteriores
+            const result = document.createElement('pre'); // Usamos <pre> para formatear el JSON
+            result.textContent = JSON.stringify(data, null, 2); // Muestra el JSON de manera legible
+            resultsDiv.appendChild(result);
         }
     </script>
+
 </body>
 </html>
