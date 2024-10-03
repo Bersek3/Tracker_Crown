@@ -33,6 +33,24 @@ app.post('/track', async (req, res) => {
 
         res.json(response.data);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        if (error.response) {
+            // La solicitud se realizó y el servidor respondió con un código de estado
+            // que cae fuera del rango de 2xx
+            res.status(error.response.status).json({ error: error.response.data });
+        } else if (error.request) {
+            // La solicitud se realizó pero no se recibió respuesta
+            res.status(500).json({ error: 'No se recibió respuesta del servidor de 17track.' });
+        } else {
+            // Algo sucedió al configurar la solicitud que desencadenó un error
+            res.status(500).json({ error: 'Error al configurar la solicitud: ' + error.message });
+        }
     }
+});
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
