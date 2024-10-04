@@ -1,29 +1,16 @@
-<script type="text/javascript">
-    // Configuración del widget de Track123
-    window.track123WidgetConfig = {
-        "api_base": "https://www.track123.com",
-        "provider_type": "1",
-        "language": "en_US",
-        "theme_color": "#5B62FF",
-        "width_type": "fixed",
-        "width_value": 320
-    };
+window.track123WidgetConfig = {
+    "api_base": "https://www.track123.com",
+    "provider_type": "1",
+    "language": "en_US",
+    "theme_color": "#5B62FF",
+    "width_type": "fixed",
+    "width_value": 320
+};
 
-    // Cargar el script del widget de Track123
-    (function (e, t, n) {
-        var r,
-            i = e.getElementsByTagName(t)[0];
-        
-        // Verificar si el widget ya ha sido cargado
-        if (e.getElementById(n)) return;
-        
-        // Crear un nuevo elemento de script
-        r = e.createElement(t);
-        r.src = "https://www.track123.com/track123-widget.min.js";
-        
-        // Insertar el script antes del primer script existente
-        i.parentNode.insertBefore(r, i);
-    })(document, "script", "track123-tracking-widget");
-</script>
-
-<div id="track123-tracking-widget"></div>
+(function (e, t, n) {
+    var r, i = e.getElementsByTagName(t)[0];
+    if (e.getElementById(n)) return;
+    r = e.createElement(t);
+    r.src = "https://www.track123.com/track123-widget.min.js";
+    i.parentNode.insertBefore(r, i);
+})(document, "script", "track123-tracking-widget");
